@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #D0473E;
+    --color-primary-hover: #b83a32;
+    --color-secondary: #E75924;
+    --color-bg-canvas: #FBF6E0;
+    --color-text-heading: #111111;
+    --color-text-body: #444444;
+  }
+
+  body {
+    font-family: 'Jost', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-bg-canvas);
+    color: var(--color-text-body);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #f0e9d2;
+}
+::-webkit-scrollbar-thumb {
+  background: #cfc7af;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D0473E;
+}
+
+/* Continuous Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}

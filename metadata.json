@@ -1,0 +1,6 @@
+{
+  "name": "Premium Supplements",
+  "description": "Premium Supplements offers top-value, Australian-made pre-workouts, creatine, bacteriostatic water, protein water, and pure Shilajit. Pure doses, no fillers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

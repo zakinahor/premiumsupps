@@ -38,19 +38,6 @@ export const Hero: React.FC<HeroProps> = ({
             <span>50% OFF STOREWIDE</span>
           </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-['Montserrat',sans-serif] font-black uppercase tracking-tight leading-[1.08] text-white">
-            BUILT FOR ATHLETES WHO
-            <br />
-            <span className="text-[#e6c96b]">DEMAND MORE.</span>
-          </h1>
-
-          {/* Description */}
-          <p className="text-stone-200 text-sm sm:text-base font-medium leading-relaxed max-w-xl">
-            High-performance supplements formulated in Australia. No proprietary blends.
-            Every milligram listed. Prices that don’t insult your intelligence.
-          </p>
-
           {/* CTA Buttons */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button

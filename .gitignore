@@ -6,3 +6,8 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Media binaries (streamed directly via fast CDN)
+*.mp4
+*.mov
+*.avi

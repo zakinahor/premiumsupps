@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Star, Check, ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
-export const ReviewsSection: React.FC = () => {
+interface ReviewsSectionProps {
+  onViewAllReviews?: () => void;
+}
+
+export const ReviewsSection: React.FC<ReviewsSectionProps> = ({ onViewAllReviews }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const reviews = [
@@ -103,15 +107,13 @@ export const ReviewsSection: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <a
-              href="https://premiumsupps.net/pages/reviews"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 font-['Instrument_Sans'] text-sm font-bold text-[#111111] hover:text-[#e75924] border-b border-[#111111] pb-0.5 uppercase tracking-wider transition-colors"
+            <button
+              onClick={onViewAllReviews}
+              className="inline-flex items-center gap-1.5 font-['Instrument_Sans'] text-sm font-bold text-[#111111] hover:text-[#e75924] border-b border-[#111111] pb-0.5 uppercase tracking-wider transition-colors cursor-pointer"
             >
-              <span>All Reviews</span>
+              <span>All Reviews (1,666+)</span>
               <ArrowUpRight className="w-4 h-4" />
-            </a>
+            </button>
 
             <div className="flex items-center gap-2 ml-2">
               <button
@@ -204,6 +206,19 @@ export const ReviewsSection: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* View All Reviews CTA */}
+        {onViewAllReviews && (
+          <div className="mt-12 text-center">
+            <button
+              onClick={onViewAllReviews}
+              className="inline-flex items-center gap-2 bg-[#111111] hover:bg-[#e75924] text-white font-['Instrument_Sans'] font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full transition-all duration-300 shadow-sm hover:shadow-md"
+            >
+              <span>View All 1,666+ Verified Customer Reviews</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
       </div>
     </section>

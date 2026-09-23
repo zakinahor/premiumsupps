@@ -8,6 +8,11 @@
     --color-bg-canvas: #FBF6E0;
     --color-text-heading: #111111;
     --color-text-body: #444444;
+
+    /* Live Customer Video Review theming variables */
+    --lr-play-bg: #e6b422;
+    --lr-play-square: #333333;
+    --lr-card-radius: 16px;
   }
 
   body {
@@ -53,4 +58,42 @@
 
 .animate-marquee:hover {
   animation-play-state: paused;
+}
+
+/* Live Customer Video Review component styles */
+.live-reviews__card {
+  border-radius: var(--lr-card-radius, 16px);
+}
+
+.live-reviews__play-square {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--lr-play-square, #333333);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.live-reviews__play-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--lr-play-bg, #e6b422);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 3px;
+  box-shadow: 0 4px 12px rgba(230, 180, 34, 0.4);
+}
+
+/* Modal sizing logic */
+.live-reviews__popup-media {
+  aspect-ratio: 9/16;
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
 }

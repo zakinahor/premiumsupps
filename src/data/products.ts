@@ -718,5 +718,44 @@ export const PRODUCTS: Product[] = [
       { id: 51584888537368, title: "30ml (~1,320 drops)", price: 31.47, compare_at_price: 44.95, sku: "PS-VIT-D", available: true, option1: "30ml (~1,320 drops)" }
     ],
     description: "<h2>Liquid Vitamin D3 in pure MCT Oil base</h2><p>Fast-absorbing liquid format delivering 400 IU bioavailable cholecalciferol per single drop. Zero binders, fillers, or artificial colors.</p>"
+  },
+  {
+    id: 8589785104664,
+    title: "L-Carnitine 30ml 600mg/ml",
+    handle: "l-carnitine-30ml-600mg-ml",
+    category: "Weight Loss",
+    product_type: "Weight Loss",
+    vendor: "Premium Supps",
+    collections: [
+      "All Products",
+      "Best Sellers",
+      "Weight Loss",
+      "Subscriptions"
+    ],
+    tags: "L-Carnitine, Weight Loss, Fat Burner",
+    badge: "TOP SELLER",
+    rating: 4.9,
+    review_count: 42,
+    price: 29.95,
+    price_max: 29.95,
+    compare_at_price: 49.95,
+    images: [
+      "https://images.loox.io/uploads/2025/12/30/hIkqb8KYq_mid.jpg",
+      "https://cdn.shopify.com/s/files/1/0811/8701/2888/files/Acetyl_1KG_1000S.jpg"
+    ],
+    options: [
+      {
+        id: 12599337519999,
+        product_id: 8589785104664,
+        name: "Size",
+        position: 1,
+        values: ["30ml Vial (600mg/ml)"]
+      }
+    ],
+    variant_count: 1,
+    variants: [
+      { id: 51584888599999, title: "30ml Vial (600mg/ml)", price: 29.95, compare_at_price: 49.95, sku: "PS-LCARN-30", available: true, option1: "30ml Vial (600mg/ml)" }
+    ],
+    description: "<h2>Ultra-Concentrated Liquid L-Carnitine 600mg/ml</h2><p>High-grade pure injectable/oral quality L-Carnitine formulated to accelerate cellular fatty acid oxidation into mitochondrial energy during intense cardio and deficit training. HPLC verified purity.</p>"
   }
 ];

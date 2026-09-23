@@ -4,9 +4,10 @@ import { Mail, CheckCircle2, ShieldCheck } from 'lucide-react';
 interface FooterProps {
   onSelectCategory: (cat: string) => void;
   onOpenLabTests: () => void;
+  onOpenReviews?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenLabTests }) => {
+export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenLabTests, onOpenReviews }) => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -100,6 +101,17 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenLabTests
                   className="hover:text-white transition-colors text-blue-400"
                 >
                   HPLC Lab Test Certificates
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={onOpenReviews}
+                  className="hover:text-white transition-colors text-[#edd065] font-semibold flex items-center gap-1.5"
+                >
+                  <span>Customer Reviews (1,666+)</span>
+                  <span className="text-[10px] bg-[#edd065]/20 text-[#edd065] px-1.5 py-0.5 rounded">
+                    ★ 4.9
+                  </span>
                 </button>
               </li>
             </ul>

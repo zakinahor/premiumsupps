@@ -7,6 +7,8 @@ interface HeaderProps {
   onOpenSearch: () => void;
   onOpenLabTests: () => void;
   onSelectCategory: (category: string) => void;
+  onOpenReviews?: () => void;
+  onGoHome?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -15,6 +17,8 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenSearch,
   onOpenLabTests,
   onSelectCategory,
+  onOpenReviews,
+  onGoHome,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currency, setCurrency] = useState('AUD');
@@ -85,7 +89,11 @@ export const Header: React.FC<HeaderProps> = ({
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if (onGoHome) {
+                  onGoHome();
+                } else {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
               }}
               className="flex items-center gap-2 group"
               aria-label="Premium Supplements Home"
@@ -112,7 +120,10 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Desktop Navigation Links */}
           <nav className="hidden lg:flex items-center gap-8 font-['Instrument_Sans'] font-semibold text-[14px] uppercase tracking-wider text-[#111111]">
             <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={() => {
+                if (onGoHome) onGoHome();
+                else window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
               className="hover:text-[#D0473E] transition-colors py-2"
             >
               Home
@@ -120,8 +131,11 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => {
+                if (onGoHome) onGoHome();
                 onSelectCategory('All Products');
-                document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                  document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
               }}
               className="hover:text-[#D0473E] transition-colors py-2"
             >
@@ -130,8 +144,11 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => {
+                if (onGoHome) onGoHome();
                 onSelectCategory('Best Sellers');
-                document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => {
+                  document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
               }}
               className="hover:text-[#D0473E] transition-colors py-2 flex items-center gap-1.5"
             >
@@ -148,9 +165,23 @@ export const Header: React.FC<HeaderProps> = ({
               Lab Tests
             </button>
 
+            {/* Dedicated Reviews Link */}
+            <button
+              onClick={onOpenReviews}
+              className="hover:text-[#D0473E] transition-colors py-2 flex items-center gap-1.5"
+            >
+              <span>Reviews</span>
+              <span className="bg-[#edd065] text-[#111111] text-[10px] font-black px-1.5 py-0.5 rounded tracking-normal">
+                1,666+
+              </span>
+            </button>
+
             <button
               onClick={() => {
-                document.getElementById('why-supps')?.scrollIntoView({ behavior: 'smooth' });
+                if (onGoHome) onGoHome();
+                setTimeout(() => {
+                  document.getElementById('why-supps')?.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
               }}
               className="hover:text-[#D0473E] transition-colors py-2"
             >
@@ -159,7 +190,10 @@ export const Header: React.FC<HeaderProps> = ({
 
             <button
               onClick={() => {
-                document.getElementById('blog-posts')?.scrollIntoView({ behavior: 'smooth' });
+                if (onGoHome) onGoHome();
+                setTimeout(() => {
+                  document.getElementById('blog-posts')?.scrollIntoView({ behavior: 'smooth' });
+                }, 50);
               }}
               className="hover:text-[#D0473E] transition-colors py-2"
             >
@@ -244,7 +278,8 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  if (onGoHome) onGoHome();
+                  else window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
                 className="w-full text-left px-5 py-3.5 hover:bg-stone-50 hover:text-[#D0473E] flex justify-between items-center"
               >
@@ -254,8 +289,11 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
+                  if (onGoHome) onGoHome();
                   onSelectCategory('All Products');
-                  document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                  setTimeout(() => {
+                    document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 50);
                 }}
                 className="w-full text-left px-5 py-3.5 hover:bg-stone-50 hover:text-[#D0473E] flex justify-between items-center"
               >
@@ -265,8 +303,11 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
+                  if (onGoHome) onGoHome();
                   onSelectCategory('Best Sellers');
-                  document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                  setTimeout(() => {
+                    document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 50);
                 }}
                 className="w-full text-left px-5 py-3.5 hover:bg-stone-50 hover:text-[#D0473E] flex justify-between items-center text-[#D0473E]"
               >
@@ -286,10 +327,27 @@ export const Header: React.FC<HeaderProps> = ({
                 <span>Lab Tests</span>
               </button>
 
+              {/* Dedicated Reviews Page Mobile Button */}
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  document.getElementById('why-supps')?.scrollIntoView({ behavior: 'smooth' });
+                  if (onOpenReviews) onOpenReviews();
+                }}
+                className="w-full text-left px-5 py-3.5 hover:bg-stone-50 hover:text-[#D0473E] flex justify-between items-center"
+              >
+                <span>Reviews</span>
+                <span className="bg-[#edd065] text-[#111111] text-[10px] font-black px-2 py-0.5 rounded">
+                  1,666+
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (onGoHome) onGoHome();
+                  setTimeout(() => {
+                    document.getElementById('why-supps')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 50);
                 }}
                 className="w-full text-left px-5 py-3.5 hover:bg-stone-50 hover:text-[#D0473E] flex justify-between items-center"
               >
@@ -299,7 +357,10 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  document.getElementById('blog-posts')?.scrollIntoView({ behavior: 'smooth' });
+                  if (onGoHome) onGoHome();
+                  setTimeout(() => {
+                    document.getElementById('blog-posts')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 50);
                 }}
                 className="w-full text-left px-5 py-3.5 hover:bg-stone-50 hover:text-[#D0473E] flex justify-between items-center"
               >

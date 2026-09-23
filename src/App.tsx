@@ -24,6 +24,7 @@ import { LabTestsModal } from './components/LabTestsModal';
 import { CheckoutModal } from './components/CheckoutModal';
 import { MysteryGiftModal } from './components/MysteryGiftModal';
 import { Toast } from './components/Toast';
+import { ReviewsPage } from './pages/ReviewsPage';
 
 export default function App() {
   const [products] = useState<Product[]>(PRODUCTS);
@@ -36,6 +37,19 @@ export default function App() {
     }
   });
 
+  const [currentPage, setCurrentPage] = useState<'home' | 'reviews'>(() => {
+    if (typeof window !== 'undefined') {
+      if (
+        window.location.hash === '#reviews' ||
+        window.location.hash.includes('reviews') ||
+        window.location.pathname.includes('/reviews')
+      ) {
+        return 'reviews';
+      }
+    }
+    return 'home';
+  });
+
   const [activeCategory, setActiveCategory] = useState('All Products');
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -44,6 +58,45 @@ export default function App() {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [addedProductId, setAddedProductId] = useState<number | null>(null);
+
+  // Sync hash change for page navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#reviews' || window.location.hash.includes('reviews')) {
+        setCurrentPage('reviews');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (window.location.hash === '' || window.location.hash === '#') {
+        setCurrentPage('home');
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const navigateToReviews = () => {
+    setCurrentPage('reviews');
+    window.location.hash = '#reviews';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToHome = () => {
+    setCurrentPage('home');
+    if (window.location.hash === '#reviews') {
+      history.pushState(null, '', window.location.pathname);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleContinueShopping = () => {
+    setCurrentPage('home');
+    if (window.location.hash === '#reviews') {
+      history.pushState(null, '', window.location.pathname);
+    }
+    setTimeout(() => {
+      document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
 
   // Save cart to localStorage
   useEffect(() => {
@@ -146,91 +199,116 @@ export default function App() {
         onOpenCart={() => setIsCartOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
         onOpenLabTests={() => setIsLabTestsOpen(true)}
+        onOpenReviews={navigateToReviews}
+        onGoHome={navigateToHome}
         onSelectCategory={(cat) => {
+          if (currentPage !== 'home') {
+            setCurrentPage('home');
+          }
           setActiveCategory(cat);
-          const el = document.getElementById('premium-range');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            const el = document.getElementById('premium-range');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 50);
         }}
       />
 
-      <main className="flex-grow">
-        {/* 2. Hero Section matching Glozin Template */}
-        <Hero
-          featuredProduct={warriorKingProduct}
-          onExplorePreWorkouts={() => {
-            document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          onExploreStacks={() => {
-            document.getElementById('stacks')?.scrollIntoView({ behavior: 'smooth' });
-          }}
-          onQuickView={(p) => setQuickViewProduct(p)}
-        />
-
-        {/* 3. Circular Category Navigation (6 Circles) */}
-        <CategoryCircles
-          activeCategory={activeCategory}
-          onSelectCategory={(cat) => {
-            setActiveCategory(cat);
-          }}
-        />
-
-        {/* 4. Cancel Ticker (Yellow Ribbon with Red Cancel Icon) */}
-        <CancelTicker />
-
-        {/* 5. The Premium Range: Fuel Your Potential (Tabs + Inline Variants + Yellow Add to Cart) */}
-        <PremiumRangeSection
+      {currentPage === 'reviews' ? (
+        /* DEDICATED REVIEWS PAGE - Stays 100% on our website */
+        <ReviewsPage
           products={products}
-          onQuickView={(p) => setQuickViewProduct(p)}
-          onAddToCart={handleAddToCart}
-          addedProductId={addedProductId}
-        />
-
-        {/* 6. Why PremiumSupps: Pure Doses. No Fillers. No Excuses. + 99%+ Purity Tested */}
-        <WhyPremiumSupps onOpenLabTests={() => setIsLabTestsOpen(true)} />
-
-        {/* 7. Live Video Reviews: Join 36,000+ Australians Training Harder */}
-        <LiveVideoReviews />
-
-        {/* 8. Stack Bundle: Bundle & Save Up to 50% */}
-        <StacksSection
-          products={products}
-          onQuickView={(p) => setQuickViewProduct(p)}
-          onAddToCart={(p) => handleAddToCart(p)}
-        />
-
-        {/* 9. Super Saver Sale Promo Banner */}
-        <SuperSaverBanner />
-
-        {/* 10. What Sets Us Apart: No Fluff. No Fillers. Just Results. */}
-        <WhyWarriorWorks />
-
-        {/* 11. Social Proof: What Our Customers Say (6 Verified Customer Reviews) */}
-        <ReviewsSection />
-
-        {/* 12. The Standard We Set: Dosed For Results (6,000mg L-Citrulline Hero Card) */}
-        <IngredientsStandard onOpenLabTests={() => setIsLabTestsOpen(true)} />
-
-        {/* 13. Frequently Asked Questions (2-Column with Side Banner) */}
-        <FaqSection />
-
-        {/* 14. From The Blog (3 Featured Guides) */}
-        <BlogPostsSection />
-
-        {/* 15. CTA Hero Strip: Stop Buying Supplements You Can't Trust */}
-        <CtaHeroStrip
-          onShopAll={() => {
-            document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+          onGoHome={navigateToHome}
+          onContinueShopping={handleContinueShopping}
+          onSelectProduct={(prod) => setQuickViewProduct(prod)}
+          onAddToCart={(prod) => {
+            handleAddToCart(prod);
+            setIsCartOpen(true);
           }}
         />
-      </main>
+      ) : (
+        <main className="flex-grow">
+          {/* 2. Hero Section matching Glozin Template */}
+          <Hero
+            featuredProduct={warriorKingProduct}
+            onExplorePreWorkouts={() => {
+              document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            onExploreStacks={() => {
+              document.getElementById('stacks')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            onQuickView={(p) => setQuickViewProduct(p)}
+          />
+
+          {/* 3. Circular Category Navigation (6 Circles) */}
+          <CategoryCircles
+            activeCategory={activeCategory}
+            onSelectCategory={(cat) => {
+              setActiveCategory(cat);
+            }}
+          />
+
+          {/* 4. Cancel Ticker (Yellow Ribbon with Red Cancel Icon) */}
+          <CancelTicker />
+
+          {/* 5. The Premium Range: Fuel Your Potential (Tabs + Inline Variants + Yellow Add to Cart) */}
+          <PremiumRangeSection
+            products={products}
+            onQuickView={(p) => setQuickViewProduct(p)}
+            onAddToCart={handleAddToCart}
+            addedProductId={addedProductId}
+          />
+
+          {/* 6. Why PremiumSupps: Pure Doses. No Fillers. No Excuses. + 99%+ Purity Tested */}
+          <WhyPremiumSupps onOpenLabTests={() => setIsLabTestsOpen(true)} />
+
+          {/* 7. Live Video Reviews: Join 36,000+ Australians Training Harder */}
+          <LiveVideoReviews onViewAllReviews={navigateToReviews} />
+
+          {/* 8. Stack Bundle: Bundle & Save Up to 50% */}
+          <StacksSection
+            products={products}
+            onQuickView={(p) => setQuickViewProduct(p)}
+            onAddToCart={(p) => handleAddToCart(p)}
+          />
+
+          {/* 9. Super Saver Sale Promo Banner */}
+          <SuperSaverBanner />
+
+          {/* 10. What Sets Us Apart: No Fluff. No Fillers. Just Results. */}
+          <WhyWarriorWorks />
+
+          {/* 11. Social Proof: What Our Customers Say (6 Verified Customer Reviews) */}
+          <ReviewsSection onViewAllReviews={navigateToReviews} />
+
+          {/* 12. The Standard We Set: Dosed For Results (6,000mg L-Citrulline Hero Card) */}
+          <IngredientsStandard onOpenLabTests={() => setIsLabTestsOpen(true)} />
+
+          {/* 13. Frequently Asked Questions (2-Column with Side Banner) */}
+          <FaqSection />
+
+          {/* 14. From The Blog (3 Featured Guides) */}
+          <BlogPostsSection />
+
+          {/* 15. CTA Hero Strip: Stop Buying Supplements You Can't Trust */}
+          <CtaHeroStrip
+            onShopAll={() => {
+              document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+          />
+        </main>
+      )}
 
       {/* 16. Comprehensive Footer */}
       <Footer
         onSelectCategory={(cat) => {
+          if (currentPage !== 'home') setCurrentPage('home');
           setActiveCategory(cat);
-          document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+          setTimeout(() => {
+            document.getElementById('premium-range')?.scrollIntoView({ behavior: 'smooth' });
+          }, 50);
         }}
         onOpenLabTests={() => setIsLabTestsOpen(true)}
+        onOpenReviews={navigateToReviews}
       />
 
       {/* 17. Floating Bottom-Left Mystery Gift Trigger & Modal */}

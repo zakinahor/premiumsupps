@@ -22,7 +22,6 @@ export interface VideoReviewItem {
   quote: string;
   poster: string;
   videoUrl: string;
-  fallbackVideoUrl: string;
 }
 
 interface LiveVideoReviewsProps {
@@ -53,7 +52,6 @@ export const LiveVideoReviews: React.FC<LiveVideoReviewsProps> = ({ onViewAllRev
       poster: '/videos/video-1-poster.jpg',
       videoUrl:
         'https://cdn.shopify.com/videos/c/o/v/b9d2b8aa2b1244febfaef68613b0aa33.mp4',
-      fallbackVideoUrl: '/videos/video-1.mp4',
     },
     {
       id: 2,
@@ -66,7 +64,6 @@ export const LiveVideoReviews: React.FC<LiveVideoReviewsProps> = ({ onViewAllRev
       poster: '/videos/creatine-poster.jpg',
       videoUrl:
         'https://cdn.shopify.com/videos/c/o/v/c402cc5490214ac8aef9219e34096e63.mp4',
-      fallbackVideoUrl: '/videos/creatine-review.mp4',
     },
     {
       id: 3,
@@ -79,7 +76,6 @@ export const LiveVideoReviews: React.FC<LiveVideoReviewsProps> = ({ onViewAllRev
       poster: '/videos/video-3-poster.jpg',
       videoUrl:
         'https://cdn.shopify.com/videos/c/o/v/adfa69546af34dca88b7c2017c6a31f7.mp4',
-      fallbackVideoUrl: '/videos/video-3.mp4',
     },
     {
       id: 4,
@@ -92,7 +88,6 @@ export const LiveVideoReviews: React.FC<LiveVideoReviewsProps> = ({ onViewAllRev
       poster: '/videos/video-4-poster.jpg',
       videoUrl:
         'https://cdn.shopify.com/videos/c/o/v/efaf8b1f14b547b9b173a947c7620216.mp4',
-      fallbackVideoUrl: '/videos/video-4.mp4',
     },
     {
       id: 5,
@@ -105,7 +100,6 @@ export const LiveVideoReviews: React.FC<LiveVideoReviewsProps> = ({ onViewAllRev
       poster: '/videos/video-5-poster.jpg',
       videoUrl:
         'https://cdn.shopify.com/videos/c/o/v/abb1dc84470641f1b81425fa816d4ae9.mp4',
-      fallbackVideoUrl: '/videos/video-5.mp4',
     },
     {
       id: 6,
@@ -118,7 +112,6 @@ export const LiveVideoReviews: React.FC<LiveVideoReviewsProps> = ({ onViewAllRev
       poster: '/videos/video-6-poster.jpg',
       videoUrl:
         'https://cdn.shopify.com/videos/c/o/v/5a932166e02e4887bfe39887ee5c7f3c.mp4',
-      fallbackVideoUrl: '/videos/video-6.mp4',
     },
   ];
 
@@ -460,7 +453,6 @@ export const LiveVideoReviews: React.FC<LiveVideoReviewsProps> = ({ onViewAllRev
               className="absolute inset-0 w-full h-full object-cover cursor-pointer bg-black"
             >
               <source src={activeVideo.videoUrl} type="video/mp4" />
-              <source src={activeVideo.fallbackVideoUrl} type="video/mp4" />
               Your browser does not support HTML5 video.
             </video>
 
